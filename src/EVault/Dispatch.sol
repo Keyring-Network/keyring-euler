@@ -46,6 +46,8 @@ abstract contract Dispatch is
     address public immutable MODULE_BALANCE_FORWARDER;
     /// @notice Address of the Governance module
     address public immutable MODULE_GOVERNANCE;
+    /// @notice Keyring compliance module
+    address public immutable MODULE_COMPLIANCE;
 
     /// @title DeployedModules
     /// @notice This struct is used to pass in the addresses of EVault modules during deployment
@@ -58,6 +60,7 @@ abstract contract Dispatch is
         address riskManager;
         address balanceForwarder;
         address governance;
+        address compliance;
     }
 
     constructor(Integrations memory integrations, DeployedModules memory modules) Base(integrations) {
@@ -69,6 +72,7 @@ abstract contract Dispatch is
         MODULE_RISKMANAGER = AddressUtils.checkContract(modules.riskManager);
         MODULE_BALANCE_FORWARDER = AddressUtils.checkContract(modules.balanceForwarder);
         MODULE_GOVERNANCE = AddressUtils.checkContract(modules.governance);
+        MODULE_COMPLIANCE = AddressUtils.checkContract(modules.compliance);
     }
 
     // Modifier proxies the function call to a module and low-level returns the result

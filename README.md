@@ -1,74 +1,16 @@
-# Euler Vault Kit
+# Euler Vault Kit with Keyring Integation
+We showcase one of the possible ways in which Keyring can be added to the Euler Vault Kit in order to add permissioning to its vaults.
 
-The Euler Vault Kit is a system for constructing credit vaults. Credit vaults are ERC-4626 vaults with added borrowing functionality. Unlike typical ERC-4626 vaults which earn yield by actively investing deposited funds, credit vaults are passive lending pools. See the [whitepaper](https://docs.euler.finance/euler-vault-kit-white-paper/) for more details.
+## The Compliance module
+Following the modularised structure already in place, we added a new *Compliance module* where Keyring logic will sit. Vault users can replace this module with a dummy one to remove permissioning from their vaults if they wish.
+The set *policyId* cannot be changed, this choice was made in order to preserve an unopinionated ownership or governance model.
 
-## Install
+## Changes
+- We add the COMPLIANCE handler to the list of modules in `EVault/Dispatch.sol`
+- Create two new modules inside the *modules* folder, one dummy `Compliance.sol` one for permissionless vaults and a `KeyringCompliance` module for permissioned ones
+- Adding the module to the test setup files, `EVaultTestBase.sol` and `Setup.t.sol`
 
-To install Euler Vault Kit in a [Foundry](https://github.com/foundry-rs/foundry) project:
-
-```sh
-forge install euler-xyz/euler-vault-kit
-```
-
-## Usage
-
-To install Foundry:
-
-```sh
-curl -L https://foundry.paradigm.xyz | bash
-```
-
-This will download foundryup. To start Foundry, run:
-
-```sh
-foundryup
-```
-
-To clone the repo:
-
-```sh
-git clone https://github.com/euler-xyz/euler-vault-kit.git && cd euler-vault-kit
-```
-
-## Testing
-
-### in `default` mode
-
-To run the tests in a `default` mode:
-
-```sh
-forge test
-```
-
-### in `coverage` mode
-
-```sh
-./test/scripts/coverage.sh
-```
-
-### invariants tests (`/tests/invariants`)
-```sh
-./test/scripts/echidna.sh # property mode
-./test/scripts/echidna-assert.sh # assertion mode
-./test/scripts/medusa.sh 
-```
-
-## Safety
-
-This software is **experimental** and is provided "as is" and "as available".
-
-**No warranties are provided** and **no liability will be accepted for any loss** incurred through the use of this codebase.
-
-Always include thorough tests when using the Euler Vault Kit to ensure it interacts correctly with your code.
-
-The Euler Vault Kit is currently undergoing security audits and should not be used in production.
-
-## Known limitations
-
-Refer to the [whitepaper](https://docs.euler.finance/euler-vault-kit-white-paper/) for a list of known limitations and security considerations.
-
-## License
-
-(c) 2024 Euler Labs Ltd.
-
-The Euler Vault Kit code is licensed under GPL-2.0 or later except for the files in `src/EVault/modules/`, which are licensed under Business Source License 1.1 (see the file `LICENSE`). These files will be automatically re-licensed under GPL-2.0 or later on April 24th, 2029.
+## ToDo
+- [x] add module
+- [x] code compile
+- [x] run Slither
