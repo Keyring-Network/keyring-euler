@@ -500,6 +500,15 @@ interface IGovernance {
     function setInterestFee(uint16 newFee) external;
 }
 
+/// @title ICompliance
+/// @notice Interface of the EVault's Compliance module
+interface ICompliance is IEVCVault {
+    /// @notice Retrieve if an account is authorized or not
+    /// @param user Account interacting with the vault
+    /// @return authorisedFlag If ok or not
+    function isAuthorized(address user) external view returns (bool);
+}
+
 /// @title IEVault
 /// @custom:security-contact security@euler.xyz
 /// @author Euler Labs (https://www.eulerlabs.com/)
@@ -512,7 +521,8 @@ interface IEVault is
     ILiquidation,
     IRiskManager,
     IBalanceForwarder,
-    IGovernance
+    IGovernance,
+    ICompliance
 {
     /// @notice Fetch address of the `Initialize` module
     function MODULE_INITIALIZE() external view returns (address);
@@ -530,4 +540,6 @@ interface IEVault is
     function MODULE_BALANCE_FORWARDER() external view returns (address);
     /// @notice Fetch address of the `Governance` module
     function MODULE_GOVERNANCE() external view returns (address);
+    /// @notice Fetch address of the `Compliance` module
+    function MODULE_COMPLIANCE() external view returns (address);
 }

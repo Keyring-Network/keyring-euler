@@ -240,4 +240,10 @@ contract EVault is Dispatch {
     function setCaps(uint16 supplyCap, uint16 borrowCap) public virtual override use(MODULE_GOVERNANCE) {}
 
     function setInterestFee(uint16 newFee) public virtual override use(MODULE_GOVERNANCE) {}
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    //                                      COMPLIANCE                                           //
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    function isAuthorized(address user) public view virtual override useView(MODULE_COMPLIANCE) returns (bool) {}
 }

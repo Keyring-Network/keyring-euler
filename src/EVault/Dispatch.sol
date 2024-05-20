@@ -12,6 +12,7 @@ import {InitializeModule} from "./modules/Initialize.sol";
 import {BalanceForwarderModule} from "./modules/BalanceForwarder.sol";
 import {GovernanceModule} from "./modules/Governance.sol";
 import {RiskManagerModule} from "./modules/RiskManager.sol";
+import {ComplianceModule} from "./modules/Compliance.sol";
 
 import {AddressUtils} from "./shared/lib/AddressUtils.sol";
 import "./shared/Constants.sol";
@@ -28,7 +29,8 @@ abstract contract Dispatch is
     LiquidationModule,
     RiskManagerModule,
     BalanceForwarderModule,
-    GovernanceModule
+    GovernanceModule,
+    ComplianceModule
 {
     /// @notice Address of the Initialize module
     address public immutable MODULE_INITIALIZE;

@@ -20,7 +20,6 @@ import {BalanceForwarder} from "src/EVault/modules/BalanceForwarder.sol";
 import {Governance} from "src/EVault/modules/Governance.sol";
 import {RiskManager} from "src/EVault/modules/RiskManager.sol";
 import {Compliance} from "src/EVault/modules/Compliance.sol";
-
 import {IEVault, IERC20} from "src/EVault/IEVault.sol";
 import {TypesLib} from "src/EVault/shared/types/Types.sol";
 import {Base} from "src/EVault/shared/Base.sol";
