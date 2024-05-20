@@ -23,7 +23,6 @@ import {Liquidation} from "src/EVault/modules/Liquidation.sol";
 import {BalanceForwarder} from "src/EVault/modules/BalanceForwarder.sol";
 import {Governance} from "src/EVault/modules/Governance.sol";
 import {RiskManager} from "src/EVault/modules/RiskManager.sol";
-import {Compliance} from "src/EVault/modules/Compliance.sol";
 
 // Test Contracts
 import {ERC20Mock as TestERC20} from "@openzeppelin/contracts/mocks/token/ERC20Mock.sol";
@@ -80,8 +79,7 @@ contract Setup is BaseTest {
             liquidation: address(new Liquidation(integrations)),
             riskManager: address(new RiskManager(integrations)),
             balanceForwarder: address(new BalanceForwarder(integrations)),
-            governance: address(new Governance(integrations)),
-            compliance: address(new Compliance(integrations))
+            governance: address(new Governance(integrations))
         });
 
         // Deploy the vault implementation

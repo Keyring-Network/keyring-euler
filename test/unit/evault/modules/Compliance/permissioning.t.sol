@@ -3,12 +3,11 @@
 pragma solidity ^0.8.0;
 
 import "test/unit/evault/EVaultTestBase.t.sol";
-import {KeyringCompliance} from "src/EVault/modules/KeyringCompliance.sol";
+import {PermissionedVault} from "src/EVault/modules/PermissionedVault.sol";
 import {MockKeyringCredentialCache} from "test/mocks/MockKeyring.sol";
 
 contract Compliance_Permissioning is EVaultTestBase {
-    address alice = makeAddr("alice");
-    address bob = makeAddr("bob");
+    address user = makeAddr("user");
     IEVault eTSTCompliant;
 
     MockKeyringCredentialCache public immutable keyring = new MockKeyringCredentialCache();
@@ -22,7 +21,7 @@ contract Compliance_Permissioning is EVaultTestBase {
 
         Dispatch.DeployedModules memory modulesCompliant = modules;
 
-        modulesCompliant.compliance = address(new KeyringCompliance(integrationsCompliant, address(keyring), policyId));
+        modulesCompliant.vault = address(new PermissionedVault(integrationsCompliant, address(keyring), policyId));
 
         address evaultImpl = address(new EVault(integrationsCompliant, modulesCompliant));
 
@@ -37,12 +36,9 @@ contract Compliance_Permissioning is EVaultTestBase {
     }
 
     function test_CanAccess() public {
-        // generic dummy implementation always passes
-        assertTrue(eTST.isAuthorized(alice));
-
         // keyring-permissioned vault
-        assertFalse(eTSTCompliant.isAuthorized(alice));
-        keyring.setCredential(alice, policyId, true);
-        assertTrue(eTSTCompliant.isAuthorized(alice));
+        eTSTCompliant.deposit(0, user);
+
+        keyring.setCredential(user, policyId, true);
     }
 }

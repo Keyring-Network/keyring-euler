@@ -19,7 +19,6 @@ import {Liquidation} from "src/EVault/modules/Liquidation.sol";
 import {BalanceForwarder} from "src/EVault/modules/BalanceForwarder.sol";
 import {Governance} from "src/EVault/modules/Governance.sol";
 import {RiskManager} from "src/EVault/modules/RiskManager.sol";
-import {Compliance} from "src/EVault/modules/Compliance.sol";
 import {IEVault, IERC20} from "src/EVault/IEVault.sol";
 import {TypesLib} from "src/EVault/shared/types/Types.sol";
 import {Base} from "src/EVault/shared/Base.sol";
@@ -68,7 +67,6 @@ contract EVaultTestBase is AssertionsCustomTypes, Test, DeployPermit2 {
     address riskManagerModule;
     address balanceForwarderModule;
     address governanceModule;
-    address complianceModule;
 
     function setUp() public virtual {
         bool deployOverrides = vm.envOr("DEPLOY_OVERRIDES", false);
@@ -96,7 +94,6 @@ contract EVaultTestBase is AssertionsCustomTypes, Test, DeployPermit2 {
             riskManagerModule = address(new RiskManagerOverride(integrations));
             balanceForwarderModule = address(new BalanceForwarderOverride(integrations));
             governanceModule = address(new GovernanceOverride(integrations));
-            complianceModule = address(new Compliance(integrations));
         } else {
             initializeModule = address(new Initialize(integrations));
             tokenModule = address(new Token(integrations));
@@ -106,7 +103,6 @@ contract EVaultTestBase is AssertionsCustomTypes, Test, DeployPermit2 {
             riskManagerModule = address(new RiskManager(integrations));
             balanceForwarderModule = address(new BalanceForwarder(integrations));
             governanceModule = address(new Governance(integrations));
-            complianceModule = address(new Compliance(integrations));
         }
 
         modules = Dispatch.DeployedModules({
@@ -117,8 +113,7 @@ contract EVaultTestBase is AssertionsCustomTypes, Test, DeployPermit2 {
             liquidation: liquidationModule,
             riskManager: riskManagerModule,
             balanceForwarder: balanceForwarderModule,
-            governance: governanceModule,
-            compliance: complianceModule
+            governance: governanceModule
         });
 
         address evaultImpl;
