@@ -21,7 +21,8 @@ contract Compliance_Permissioning is EVaultTestBase {
 
         Dispatch.DeployedModules memory modulesCompliant = modules;
 
-        modulesCompliant.vault = address(new PermissionedVault(integrationsCompliant, address(keyring), policyId));
+        PermissionedVault newVault = new PermissionedVault(integrationsCompliant, address(keyring), policyId);
+        modulesCompliant.vault = address(newVault);
 
         address evaultImpl = address(new EVault(integrationsCompliant, modulesCompliant));
 
@@ -36,9 +37,13 @@ contract Compliance_Permissioning is EVaultTestBase {
     }
 
     function test_CanAccess() public {
-        // keyring-permissioned vault
+        // reverts because the user is not permissioned
+        vm.expectRevert();
         eTSTCompliant.deposit(0, user);
 
+        // add the user to the whitelist
         keyring.setCredential(user, policyId, true);
+
+        eTSTCompliant.deposit(0, user);
     }
 }
